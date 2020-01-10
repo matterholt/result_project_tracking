@@ -1,0 +1,21 @@
+model_name, target,,
+base_on, Target,,
+weight_kg, 20.81,,
+description,make thing better,,
+RESULTS,RESULTS,RESULTS,RESULTS
+location_applied, node_number, load_direction, newton_mm_force
+brkt 1 left, 1,x,11.5
+brkt 1 left, 1,y,12.5
+brkt 1 left, 1,z,13.5
+brkt 1 right, 1,x,11.5
+brkt 1 right, 1,y,12.5
+brkt 1 right, 1,z,13.5
+brkt 2 left, 2,x,14.5
+brkt 2 left, 2,y,15.4
+brkt 2 left, 2,z,16.2
+brkt 2 right, 2,x,15.2
+brkt 2 right, 2,y,16
+brkt 2 right, 2,z,19
+brkt mid , 3,x,20
+brkt mid , 3,y,12
+brkt mid , 3,z,18
