@@ -10,7 +10,8 @@ Process:
         - stiffness_results will look for the id of the model name.
 
 At this stage sqlite3 will get the job, Then if program is successful the hope to migrate 
-to more substantial database such as Postgresql
+to more substantial database such as Postgresql, and  SQLAlchemy
+
 """
 import sqlite3
 from sqlite3 import Error
@@ -22,3 +23,28 @@ def create_db_connection(db_file):
     except Error as e:
         print(e)
     return conn
+
+def add_sql_model_details(db, details):
+    conn = create_db_connection(db)
+    sql_insert = """INSERT INTO model_detail
+    (model_name, base_on, weight_kg, description)
+    VALUES(?,?,?,?)"""
+    with conn:
+        cur = conn.cursor()
+        cur.execute(sql_insert, details)
+        version_name = details[0]
+        print(f"Model {version_name} details have been made")
+        return cur.lastrowid
+
+def add_sql_model_stiffness(db, results, model_id):
+        conn = create_db_connection(db)
+        sql_insert = """INSERT INTO results_stiffness
+        (model_id, location_load_applied, node_number, load_direction, newton_mm_force)
+        VALUES(?,?,?,?,?)"""
+        with conn:
+            for row_result in results[1:]:
+                sql_result_entry = [model_id + row_result]
+
+                cur = conn.cursor()
+                cur.execute(sql_insert,sql_result_entry)
+            print(f"Results have been added to db, model id = {model_id}")

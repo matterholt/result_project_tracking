@@ -32,7 +32,6 @@ def detail_column(detail,sql_headers):
     else:
         sql_header_error(column_name)
 
-
 def result_template_extract(file_dir):
     """
     params : model template file that will be updated for the new results
