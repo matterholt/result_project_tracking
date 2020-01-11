@@ -20,8 +20,7 @@ Process:
     2. Append the latest results (validate model) to a "running" excel.
         - This lines up with current group process (2020.01)
 """
-from .pkg.result_template_process import result_template_extract
-
+from pre_process import result_template_process
 #def execute_process(watch_template_file,database_file):
 def execute_process():
 
