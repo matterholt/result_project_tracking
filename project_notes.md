@@ -8,6 +8,9 @@ Born out of the desire to improve how my group process results
 
 1. Design the database, best way to add maintain incoming results.
 2. Add previous results to db, results are stored as excel.
+
+     - wanted to make it easily accessible to the team. So keeping with a similar process would allow easy adoption. If concept shows improvement then can step forward in major changes in the process.
+
 3. Manage new results, best way for everyone to contribute to the database.
 4. Save the result that is common for traditional way of sharing results
 

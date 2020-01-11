@@ -17,7 +17,10 @@ def terminate_watcher(log_times):
 
 
 def main():
+    # create a json/ csv setup file for any info
     file = r"result_templates/new_model_template.csv"
+    database_file = r"/sql_temp.db"
+
     file_name = file.split("/")[1]
 
     start_time = time.time()
@@ -49,8 +52,8 @@ def main():
             else: # not sure if need??
                 pass
         else:
-            print("Template has been update, execute result process")
-            execute_process(file)
+            print("Template has been update, generate result")
+            execute_process(file,database_file)
             last_checked_time = time.time()
 
 if __name__ == "__main__":
