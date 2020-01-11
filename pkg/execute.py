@@ -20,22 +20,25 @@ Process:
     2. Append the latest results (validate model) to a "running" excel.
         - This lines up with current group process (2020.01)
 """
-from pre_process import result_template_process
-#def execute_process(watch_template_file,database_file):
-def execute_process():
+from .pre_process.result_template_process import result_template_extract
+from .sql_commands.sql_commands import add_sql_model_details, add_sql_model_stiffness
+
+def execute_process(watch_template_file,db):
 
     file = r"result_templates/new_model_template.csv"
-    database_file = r"/sql_temp.db"
-
     """
     Before adding to DB need to extract and complie data to add
     will return an object
     """
     print("\nExtract data from Template file")
-    # return the 
+    # object to get started
     update_information = result_template_extract(watch_template_file)
 
-    print(update_information.base_on)
-    print(update_information.model_name)
 
-execute_process()
+    base_on_model_name = update_information.base_on()
+    validated_model_name = update_information.model_name()
+
+    # Add data to data base
+    print('adding details to database')
+    validated_model_id=add_sql_model_details(db, update_information)
+    add_sql_model_stiffness(db, update_information,validated_model_id)

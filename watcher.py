@@ -4,7 +4,9 @@ the the scripts to add the updated file to the data base
 """
 import os.path, time
 import sys
-from result_processing.execute import execute_process
+from pkg.execute import execute_process
+
+
 
 def terminate_watcher(log_times):
     start = log_times["script_start"]
@@ -14,12 +16,10 @@ def terminate_watcher(log_times):
     print(f"Script ended: {end}")
     sys.exit()
 
-
-
 def main():
     # create a json/ csv setup file for any info
-    file = r"result_templates/new_model_template.csv"
-    database_file = r"/sql_temp.db"
+    file = r"Templates_csv/new_model_template.csv"
+    database_file = r"XYZ_project.db"
 
     file_name = file.split("/")[1]
 

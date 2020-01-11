@@ -6,7 +6,8 @@ Uses the template file to add results to db.
 @author Matterholt, 2020-01-09
 """
 import csv
-from error_comments import sql_header_error
+#from error_comments import sql_header_error
+from .error_comments import sql_header_error
 
 class Template_Values: 
     def __init__ (self, details, results):
@@ -50,7 +51,7 @@ def result_template_extract(file_dir):
 
         for row in row_data:
             if switcher_detail_value == True:
-                if row[0] == 'RESULTS':
+                if row[0] == 'Stiffness':
                     switcher_detail_value = False
                 else:
                     # process the detail part of template
@@ -64,6 +65,7 @@ def result_template_extract(file_dir):
 
         print(parsed_template_file.details)
         print( parsed_template_file.results)
-
+        
+        return parsed_template_file
         
 

@@ -16,6 +16,7 @@ to more substantial database such as Postgresql, and  SQLAlchemy
 import sqlite3
 from sqlite3 import Error
 
+
 def create_db_connection(db_file):
     conn = None
     try:
@@ -26,9 +27,10 @@ def create_db_connection(db_file):
 
 def add_sql_model_details(db, details):
     conn = create_db_connection(db)
-    sql_insert = """INSERT INTO model_detail
+    sql_insert = """INSERT INTO model_details
     (model_name, base_on, weight_kg, description)
     VALUES(?,?,?,?)"""
+
     with conn:
         cur = conn.cursor()
         cur.execute(sql_insert, details)
@@ -38,7 +40,7 @@ def add_sql_model_details(db, details):
 
 def add_sql_model_stiffness(db, results, model_id):
         conn = create_db_connection(db)
-        sql_insert = """INSERT INTO results_stiffness
+        sql_insert = """INSERT INTO model_results
         (model_id, location_load_applied, node_number, load_direction, newton_mm_force)
         VALUES(?,?,?,?,?)"""
         with conn:
@@ -48,3 +50,6 @@ def add_sql_model_stiffness(db, results, model_id):
                 cur = conn.cursor()
                 cur.execute(sql_insert,sql_result_entry)
             print(f"Results have been added to db, model id = {model_id}")
+
+
+
