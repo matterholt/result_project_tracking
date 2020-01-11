@@ -2,6 +2,12 @@
 
 ## Build
 
+watcher file will loop for updates on the template file
+db_table_build folder 
+     -> sql database and table for the project, also will add any results that have not been saved to db.
+
+
+
 ### Problems to solve
 
 Born out of the desire to improve how my group process results
@@ -18,6 +24,9 @@ Born out of the desire to improve how my group process results
 
 - Flask REST API
 
+### TODO:
+
+- result_template_process.py --- dynamic sql header name check
 
 ### conda commands
 
@@ -27,42 +36,3 @@ conda env export > environment.yml ---> list packages installed
 ### pytest commands
 
 pytest test_example.py -v  ---> more detail in terminal
-
-## keyword expressions 
-
-### Run all tests with some string ‘validate’ in the name
-
-pytest -k “validate”
-
-### Exclude tests with ‘db’ in name but include 'validate'
-
-pytest -k “validate and not db” 
-
-### Run all test files inside a folder demo_tests
-
-pytest demo_tests/
-
-### Run a single method test_method of a test class TestClassDemo 
-
-pytest demo_tests/test_example.py::TestClassDemo::test_method
-
-### Run a single test class named TestClassDemo 
-
-pytest demo_tests/test_example.py::TestClassDemo
-
-### Run a single test function named test_sum
-
-pytest demo_tests/test_example.py::test_sum
-
-### Run tests in verbose mode: 
-
-pytest -v demo_tests/
-
-### Run tests including print statements: 
-
-pytest -s demo_tests/
-
-### Only run tests that failed during the last run 
-pytest — lf
-
--https://medium.com/testcult/intro-to-test-framework-pytest-5b1ce4d011ae

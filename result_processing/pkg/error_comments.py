@@ -1,3 +1,4 @@
+import sys
 def sql_header_error(issue):
     desc = """
     Error has accrued !!!
@@ -5,4 +6,4 @@ def sql_header_error(issue):
     Database contains => \n
     """ 
     error = desc + issue + "\n"
-    return error
+    sys.exit()

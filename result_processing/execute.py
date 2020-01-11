@@ -27,7 +27,7 @@ def execute_process(watch_template_file,database_file):
     will return an object
     """
     print("\nExtract data from Template file")
-    update_information = result
+    update_information = result_template_extract(watch_template_file)
 
 
 
