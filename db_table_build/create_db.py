@@ -20,17 +20,17 @@ def struct_table(db):
                                     id integer PRIMARY KEY,
                                     model_name TEXT NOT NULL,
                                     base_on TEXT,
-                                    weight_kg TEXT,
+                                    weight_kg REAL,
                                     description TEXT,
-                                    add_date DATETIME DEFAULT CURRENT_TIMESTAMP
+                                    add_date TEXT DEFAULT CURRENT_TIMESTAMP
                                 ); """
  
     sql_create_model_results_table = """CREATE TABLE IF NOT EXISTS model_results (
                                     id integer PRIMARY KEY,
                                     location_load_applied TEXT NOT NULL ,
-                                    node_number TEXT,
+                                    node_number REAL,
                                     load_direction TEXT NOT NULL,
-                                    newton_mm_force TEXT NOT NULL,
+                                    newton_mm_force REAL NOT NULL,
                                     model_id integer NOT NULL,
                                     FOREIGN KEY (model_id) REFERENCES model_details (id)
                                 );"""

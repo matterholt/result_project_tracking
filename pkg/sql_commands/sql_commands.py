@@ -45,7 +45,7 @@ def add_sql_model_stiffness(db, results, model_id):
         VALUES(?,?,?,?,?)"""
         with conn:
             for row_result in results[1:]:
-                sql_result_entry = [model_id + row_result]
+                sql_result_entry = [model_id] + row_result
 
                 cur = conn.cursor()
                 cur.execute(sql_insert,sql_result_entry)

@@ -39,4 +39,4 @@ class Model_Results:
 def model_construct(db_file,model_name):
 
     model_sql_detail = get_model_details(db_file, model_name)
-    model_sql_stiffness
+    return model_sql_stiffness

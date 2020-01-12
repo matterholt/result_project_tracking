@@ -23,12 +23,16 @@ class Template_Values:
 def detail_column(detail,sql_headers):
     [column_name, column_value, *other ] = detail
     if column_name == sql_headers[0]:
+        print(type(column_name))
         return column_value
     if column_name == sql_headers[1]:
+        print(type(column_name))
         return column_value
     if column_name == sql_headers[2]:
-        return column_value
+        print(type(column_name))
+        return float(column_value)
     if column_name == sql_headers[3]:
+        print(type(column_name))
         return column_value
     else:
         sql_header_error(column_name)
