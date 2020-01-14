@@ -23,6 +23,7 @@ Born out of the desire to improve how my group process results
 ### Future idea
 
 - Flask REST API
+- json or .env to set parameters for "setup"
 
 ### TODO:
 

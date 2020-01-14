@@ -66,10 +66,7 @@ def result_template_extract(file_dir):
                 model_results.append(row)
 
         parsed_template_file = Template_Values(detail_values,model_results)
-
-        print(parsed_template_file.details)
-        print( parsed_template_file.results)
-        
+    
         return parsed_template_file
         
 

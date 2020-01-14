@@ -48,3 +48,6 @@ def execute_process(watch_template_file,db):
     print('COMPLETED!!')
 
     ##### STAGE 2 #####
+    #-> need the result for the base model
+    #-> results for target
+    
