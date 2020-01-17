@@ -51,5 +51,31 @@ def add_sql_model_stiffness(db, results, model_id):
                 cur.execute(sql_insert,sql_result_entry)
             print(f"Results have been added to db, model id = {model_id}")
 
+def get_sql_modelID_detail(db, model_id):
+    conn = create_db_connection(db)
+    with conn:
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM model_details WHERE id = ?', (model_id,))
+        row = cur.fetchone()
 
+        return row
 
+def get_sql_modelName_detail(db, model_name):
+    conn = create_db_connection(db)
+    with conn:
+        cur = conn.cursor()
+        cur.execute(
+            'SELECT * FROM model_details WHERE model_name = ?', (model_name,))
+        row = cur.fetchone()
+
+        return row
+
+def get_sql_modelID_stiffness(db, id):
+    conn = create_db_connection(db)
+    with conn:
+        cur = conn.cursor()
+        cur.execute(
+            'SELECT * FROM model_results WHERE model_id = ?', (id,)
+        )
+        row = cur.fetchall()
+        return row

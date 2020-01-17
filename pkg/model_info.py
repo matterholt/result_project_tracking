@@ -4,8 +4,6 @@ Params: array of information
 Purpose: Contains information pertaining to a specific model
 Process: the data that is being pass into the class,
 
-
-
 !as of (2020-01) my thoughts about this code is that this might not be the most-correct
 way of creating the object. Hope to improve in future, when I have more knowledge.
 
@@ -15,6 +13,7 @@ TODO:
     2 -> called from teh db, so report can be made
 
 """
+from .sql_commands.sql_commands import get_sql_modelName_detail, get_sql_modelID_stiffness
 class Model_Info:
     def __init__(self, model_detail, analysis_values):
         self.detail  =  model_detail
@@ -36,7 +35,8 @@ class Model_Info:
 class Model_Results:
     pass
 
-def model_construct(db_file,model_name):
-
-    model_sql_detail = get_model_details(db_file, model_name)
-    return model_sql_stiffness
+def model_construct(db_file, model_name):
+    model_detail = get_sql_modelName_detail(db_file, model_name)
+    model_stiffness = get_sql_modelID_stiffness(db_file, model_detail[0])
+    model = Model_Info(model_detail, model_stiffness)
+    return model

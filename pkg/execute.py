@@ -19,9 +19,17 @@ Process:
     1. Generate excel with key project location, that are define in a template file
     2. Append the latest results (validate model) to a "running" excel.
         - This lines up with current group process (2020.01)
+
+TODO:
+    1. how to handle error from the sql for string not located in db
+    2. add a capitalization to the sql, inserts, to be able to control
+    3. improve class , minimize the code, (result_template_process, model_info)
 """
 from .pre_process.result_template_process import result_template_extract
-from .sql_commands.sql_commands import add_sql_model_details, add_sql_model_stiffness
+from .sql_commands.sql_commands import (add_sql_model_details,
+add_sql_model_stiffness, get_sql_modelName_detail,
+get_sql_modelID_stiffness)
+from .model_info import model_construct
 
 def execute_process(watch_template_file,db):
     """
@@ -34,6 +42,7 @@ def execute_process(watch_template_file,db):
     will return an object
     """
     print("\nExtract data from Template file")
+
     # object to get started
     update_information = result_template_extract(watch_template_file)
 
@@ -48,6 +57,14 @@ def execute_process(watch_template_file,db):
     print('COMPLETED!!')
 
     ##### STAGE 2 #####
-    #-> need the result for the base model
-    #-> results for target
+    #-> validated model
+    validated_mode = model_construct(db, validated_model_name)
+
+    #-> model to which the validation model is base on
+    base_model = model_construct(db, base_on_model_name)
+    
+    #-> OEM supplied targets,
+    target_model = model_construct(db, 'Target')
+
+    
     
