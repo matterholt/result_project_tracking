@@ -30,13 +30,16 @@ from .sql_commands.sql_commands import (add_sql_model_details,
 add_sql_model_stiffness, get_sql_modelName_detail,
 get_sql_modelID_stiffness)
 from .model_info import model_construct
+from .percentTarget_cal import percentTarget
+from .panda_actions import model_df
 
 def execute_process(watch_template_file,db):
     """
     Addingthe template file to the database
     """
     ##### STAGE 1 #####
-    file = r"result_templates/new_model_template.csv"
+    key_locations = r"Templates_csv/key_values.csv"
+
     """
     Before adding to DB need to extract and complie data to add
     will return an object
@@ -57,14 +60,27 @@ def execute_process(watch_template_file,db):
     print('COMPLETED!!')
 
     ##### STAGE 2 #####
+    #-> OEM supplied targets,
+    target_model = model_construct(db, 'Target')
+
     #-> validated model
-    validated_mode = model_construct(db, validated_model_name)
+    validated_model = model_construct(db, validated_model_name)
+    print(validated_model)
+
+    target_model_stiffness = target_model.newton_mm_values()
+    validated_model_stiffness = validated_model.newton_mm_values()
+    validated_modelvalue_percent = percentTarget(target_model_stiffness, validated_model_stiffness)
+    
+    model_df(target_model.results,
+             validated_modelvalue_percent, validated_model.name)
 
     #-> model to which the validation model is base on
     base_model = model_construct(db, base_on_model_name)
-    
-    #-> OEM supplied targets,
-    target_model = model_construct(db, 'Target')
+    print(base_model)
+
+    #TODO return pandas dataframe for analysis, 
+        # 1 to append to the master excel.
+        # 2 to create the comparison report.
 
     
     

@@ -29,8 +29,14 @@ class Model_Info:
         return self.detail
 
     def newton_mm_values(self):
-        #TODO build out function
-        print("return list of stiffness values")
+        stiffness = []
+        for index in self.results:
+            stiffness.append(index[-2])
+            
+        return stiffness
+
+    def __repr__(self):
+        return(f'Model {self.name} has weight of {self.weight}. It is based on {self.base}.')
 
 class Model_Results:
     pass

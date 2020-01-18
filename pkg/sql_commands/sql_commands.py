@@ -65,7 +65,7 @@ def get_sql_modelName_detail(db, model_name):
     with conn:
         cur = conn.cursor()
         cur.execute(
-            'SELECT * FROM model_details WHERE model_name = ?', (model_name,))
+            'SELECT * FROM model_details WHERE model_name = ? ORDER BY id', (model_name,))
         row = cur.fetchone()
 
         return row
