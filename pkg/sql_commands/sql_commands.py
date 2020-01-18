@@ -25,6 +25,7 @@ def create_db_connection(db_file):
         print(e)
     return conn
 
+
 def add_sql_model_details(db, details):
     conn = create_db_connection(db)
     sql_insert = """INSERT INTO model_details
@@ -38,18 +39,21 @@ def add_sql_model_details(db, details):
         print(f"Model {version_name} details have been made")
         return cur.lastrowid
 
-def add_sql_model_stiffness(db, results, model_id):
-        conn = create_db_connection(db)
-        sql_insert = """INSERT INTO model_results
-        (model_id, location_load_applied, node_number, load_direction, newton_mm_force)
-        VALUES(?,?,?,?,?)"""
-        with conn:
-            for row_result in results[1:]:
-                sql_result_entry = [model_id] + row_result
 
-                cur = conn.cursor()
-                cur.execute(sql_insert,sql_result_entry)
-            print(f"Results have been added to db, model id = {model_id}")
+def add_sql_model_stiffness(db, results, model_id):
+    conn = create_db_connection(db)
+    sql_insert = """INSERT INTO model_results
+        (model_id, location_load_applied, node_number,
+         load_direction, newton_mm_force)
+        VALUES(?,?,?,?,?)"""
+    with conn:
+        for row_result in results[1:]:
+            sql_result_entry = [model_id] + row_result
+
+            cur = conn.cursor()
+            cur.execute(sql_insert, sql_result_entry)
+        print(f"Results have been added to db, model id = {model_id}")
+
 
 def get_sql_modelID_detail(db, model_id):
     conn = create_db_connection(db)
@@ -60,6 +64,7 @@ def get_sql_modelID_detail(db, model_id):
 
         return row
 
+
 def get_sql_modelName_detail(db, model_name):
     conn = create_db_connection(db)
     with conn:
@@ -69,6 +74,7 @@ def get_sql_modelName_detail(db, model_name):
         row = cur.fetchone()
 
         return row
+
 
 def get_sql_modelID_stiffness(db, id):
     conn = create_db_connection(db)

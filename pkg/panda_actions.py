@@ -1,21 +1,37 @@
 import pandas as pd
-
-def append_to_excel(df):
-    pass
+from .report_build.excel_format import save_excel
 
 
-def model_df(label_target, stiff_pct, model_name):
-    stiff_label = model_name + ' (N/mm)'
-    label_with_target = pd.DataFrame(label_target, columns=[
-                                     'id', 'location', 'node', 'dir', 'Target(N/mm)', 'model_id'])
+def filter_keyValue(df):
+    key_val = r"Templates_csv/key_values.csv"
+    key_value_df = pd.read_csv(key_val, header=0)
 
-    stiffness_w_percent = pd.DataFrame(
-        stiff_pct, columns=[stiff_label, '%target'])
-    # append to the large excel, 
-    
-    combine_table = pd.concat([label_with_target, stiffness_w_percent], axis=1, sort=False)
-    
-    drop_columns = ['id', 'node', 'model_id']
-    clean_table = combine_table.drop(columns=drop_columns)
+    key_results = pd.merge(key_value_df, df, how='left',
+                           on=['Loc.', 'Dir'])
+    return key_results
 
-    print(clean_table)
+
+def build_Report(report_data, model_detail):
+    '''
+    append the results to the master excel
+    '''
+    report_loc = r'./Results/' + model_detail.name + '.xlsx'
+    row_label_df = pd.DataFrame(
+        report_data['row_labels'], columns=['Loc.', 'Dir'])
+
+    target_df = pd.DataFrame(
+        report_data['target_stiff'], columns=['Target(N/mm)', ])
+
+    baseName = model_detail.base + '(N/mm)'
+    base_df = pd.DataFrame(report_data['base_stiff_vals'], columns=[
+                           baseName, '%target'])
+
+    modelName = model_detail.name + ('N/mm')
+    model_df = pd.DataFrame(report_data['model_stiff_vals'], columns=[
+        modelName, '%target'])
+
+    combine_table = pd.concat(
+        [row_label_df, target_df, base_df, model_df], axis=1, sort=False)
+
+    key_value_report = filter_keyValue(combine_table)
+    save_excel(key_value_report, report_loc, model_detail.name)

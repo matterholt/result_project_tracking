@@ -16,6 +16,6 @@ def percentTarget(target_results, model_results):
         percent = percent_cal(model_stiffness, target_stiffness)
 
         result_list.append(percent)
-    
-    stiffness_percent = zip(model_results,result_list)
+
+    stiffness_percent = zip(model_results, result_list)
     return stiffness_percent

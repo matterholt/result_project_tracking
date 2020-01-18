@@ -1,8 +1,8 @@
-location, direction
-brkt 1 left, 1,y,13
-brkt 1 left, 1,z,14
-brkt 2 left, 2,y,16
-brkt 2 right, 2,y,17
-brkt mid , 3,x,16
-brkt mid , 3,y,17
-brkt mid , 3,z,18
+Loc.,Dir
+brkt 1 left,y
+brkt 1 left,z
+brkt 2 left,y
+brkt 2 right,y
+brkt mid,x
+brkt mid,y
+brkt mid,z
