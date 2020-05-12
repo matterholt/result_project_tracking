@@ -4,7 +4,7 @@ A python program that would assist the engineer with processing results and prov
 
 ## How to use
 
--- update when get in head space!!
+This process is a bit complicated and there is a way to improve. Currently user would have to use the terminal and create templates in excel. Hope to create an application to which user could login and submit a csv file with some data of the model.
 
 ## Inspiration for build
 
@@ -45,4 +45,5 @@ When the watcher indicates an update to the template file by a save. Program wil
 
 ## Future Features
 
-1.
+1. Convert to a web application
+2. Add test
