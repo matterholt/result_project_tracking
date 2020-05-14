@@ -3,7 +3,6 @@
 
 building a backend to allow engineer to apply results to a database
 
-[] get DB models set up
+-[X] Model structure for database
+-[] Test Models for fea results
 
-routes
-[] add cmData
