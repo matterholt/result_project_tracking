@@ -1,10 +1,11 @@
 from pkg.execute import execute_process
+import os.path
 
 
 def main():
-    
-    file = r"Templates_csv/new_model_template.csv"
-    database_file = "XYZ_project.db"
+
+    file = os.path.join("Templates_csv", "new_model_template.csv")
+    database_file = os.path.join("Results", "XYZ_project.db")
     execute_process(file, database_file)
 
 

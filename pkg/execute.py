@@ -41,7 +41,6 @@ def execute_process(watch_template_file, db):
     Addingthe template file to the database
     """
     # STAGE 1 #####
-    key_locations = r"Templates_csv/key_values.csv"
 
     """
     Before adding to DB need to extract and complie data to add

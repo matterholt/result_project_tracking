@@ -1,5 +1,6 @@
 import pandas as pd
 from .report_build.excel_format import save_excel
+import os.path
 
 
 def filter_keyValue(df):
@@ -15,7 +16,9 @@ def build_Report(report_data, model_detail):
     '''
     append the results to the master excel
     '''
-    report_loc = r'./Results/' + model_detail.name + '.xlsx'
+    # !! better to have the the link past in from main file,
+    report_loc = os.path("./Results/", model_detail.name, ".xlsx")
+
     row_label_df = pd.DataFrame(
         report_data['row_labels'], columns=['Loc.', 'Dir'])
 
