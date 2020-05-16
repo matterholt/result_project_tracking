@@ -1,17 +1,13 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-# Create your views here.
-# django part 3!!
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
 
-# Home page
-
-
-def index(request):
-    return HttpResponse("Keep track of your results to excel")
+from .models import Detail_cm_model
+from .serializers import Detail_cm_model_Serializer
 
 
-# Add Results
-
-# View Results by model name
-
-#
+@api_view(['GET', 'POST'])
+def result_list(request):
+    data = Detail_cm_model.objects.all()
+    serializer = Detail_cm_model_Serializer(data, context={'request': request})
+    return Response(serializer.data)

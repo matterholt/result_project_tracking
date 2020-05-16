@@ -19,7 +19,8 @@ from results import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^api/results/$', views.results_list),  # see the complete list
+    re_path(r'^api/results/$', views.result_list),  # see the complete list
+
     # see the detail on model
-    re_path(r'^api/results/(?P[0-9]$', views.results_details)
+    re_path(r'^api/results/([0-9]+)$', views.result_list)
 ]
