@@ -2,6 +2,7 @@ name: django_server
 channels:
   - defaults
 dependencies:
+  - autopep8=1.4.4=py_0
   - ca-certificates=2020.1.1=0
   - certifi=2020.4.5.1=py37_0
   - django=2.2.5=py37_1
