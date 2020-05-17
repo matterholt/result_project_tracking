@@ -16,6 +16,7 @@ def result_list(request):
 
     elif request.method == 'POST':
         serializer = Detail_cm_model_Serializer(data=request.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_201_CREATED)
