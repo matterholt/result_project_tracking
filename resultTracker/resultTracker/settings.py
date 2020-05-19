@@ -36,8 +36,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
-    'results',
-    # 'results.apps.ResultsConfig',
+    'model_tracker.apps.ModelTrackerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

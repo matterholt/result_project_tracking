@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
-from results import views
+from model_tracker import views
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('results/', include('results.urls')),
-    re_path(r'^api/results/$', views.result_list),
-    re_path(r'^api/results/([0-9]+)$', views.result_list)
+    re_path(r'^api/models/$', views.models_list),
+    # ERROR re_path(r'^api/models/(?P[0-9]+)$', views.model_detail)
+    re_path(r'^api/models/([0-9]+)$', views.model_detail)
+
 ]

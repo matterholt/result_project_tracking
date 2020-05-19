@@ -2,8 +2,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
-from .models import Detail_cm_model
-from .serializers import Detail_cm_model_Serializer
+from .models import Cm_model_detail
+from .serializers import Cm_model_detail_Serializer
 
 from django.http import HttpResponse
 
