@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import NewResultForm from "./NewResultForm";
 
@@ -31,7 +31,7 @@ class NewResultModal extends Component {
     }
 
     return (
-      <div style={{ margin: "50px" }}>
+      <ModalBody>
         {button}
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>{title}</ModalHeader>
@@ -41,7 +41,7 @@ class NewResultModal extends Component {
             results={this.props.results}
           />
         </Modal>
-      </div>
+      </ModalBody>
     );
   }
 }

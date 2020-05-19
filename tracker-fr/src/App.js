@@ -1,13 +1,13 @@
 import React from "react";
 
 import Header from "./components/Header";
-import NewResultModel from "./components/NewResultModel";
+import ResultsList from "./components/ResultsList";
 
 function App() {
   return (
     <div>
       <Header />
-      <NewResultModel />
+      <ResultsList />
     </div>
   );
 }
