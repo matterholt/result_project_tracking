@@ -5,6 +5,12 @@ from rest_framework import status
 from .models import Detail_cm_model
 from .serializers import Detail_cm_model_Serializer
 
+from django.http import HttpResponse
+
+
+def index(request):
+    return HttpResponse("Hello, world. You're at the polls index.")
+
 
 @api_view(['GET', 'POST'])
 def result_list(request):

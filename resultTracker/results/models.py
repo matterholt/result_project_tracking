@@ -15,11 +15,8 @@ class Project(models.Model):
 class Detail_cm_model(models.Model):
     base_model_name = models.CharField(max_length=100, default='none')
     cm_model_name = models.CharField(max_length=100, default="newCM")
-    #date_added = models.DateField(auto_now_add=True)
     cm_model_description = models.CharField(
         max_length=250, default="i do what i want")
-
-    # project_code = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.cm_model_name

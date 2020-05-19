@@ -8,6 +8,7 @@ import ConfirmRemovalModal from "./ConfirmRemovalModal";
 class ResultsList extends Component {
   render() {
     const results = this.props.results;
+    console.log(`from the  results list ${results}`);
     return (
       <Table>
         <thead>

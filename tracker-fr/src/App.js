@@ -1,13 +1,13 @@
 import React from "react";
 
 import Header from "./components/Header";
-import ResultsList from "./components/ResultsList";
+import Home from "./components/Home";
 
 function App() {
   return (
     <div>
       <Header />
-      <ResultsList />
+      <Home />
     </div>
   );
 }
