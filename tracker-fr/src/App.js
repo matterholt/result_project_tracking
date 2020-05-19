@@ -1,13 +1,13 @@
 import React from "react";
 
 import Header from "./components/Header";
-import NewResultForm from "./components/NewResultForm";
+import NewResultModel from "./components/NewResultModel";
 
 function App() {
   return (
     <div>
       <Header />
-      <NewResultForm />
+      <NewResultModel />
     </div>
   );
 }
