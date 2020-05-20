@@ -2,16 +2,22 @@
 
 ## Roadmap
 
+0. User
+   ->
+
 1. Fea Models
    -> add models
    -> update models with values
+   -> do we need to know the Owner??
 
-2. Model Results
+2. Model stiffness Results
    -> add results associated with model
    -> select model to compare
    -> need to have Target | Base Model | CM models
+   -> Store the punch file
+   -> Process results and add to database
 
-3. Model Judgements
+3. Model Judgement
    -> If model NG,OK or can be improved
 
 ## Django Rest API
