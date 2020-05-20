@@ -15,7 +15,8 @@ class Cm_model_detail(models.Model):
 
 '''
 class Cm_stiffness(models.Model):
-    pch_file = models.FileField(upload_to='MEDIA_ROOT/pchResult/', blank=True, null=True)
+    pch_file = models.FileField(upload_to='MEDIA_ROOT/pchResult/',
+     blank=True, null=True)
 
 
 

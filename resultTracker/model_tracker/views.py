@@ -3,14 +3,29 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
+from django.http import HttpResponse, Http404
+
 from .models import Cm_model_detail
 from .serializers import Cm_model_detail_Serializer
 
 
+def home_view(request, *args, **kwargs):
+    return HttpResponse("<h1>Hello track the model</h1>")
+
+
+def model_view(request, model_id):
+    try:
+        obj = Cm_model_detail.objects.get(id=model_id)
+    except Exception:
+        raise Http404
+    return HttpResponse(f"<h1>Model Details for <br> {obj}</h1>")
+
+
+'''
 @api_view(['GET', 'POST'])
 def models_list(request):
     if request.method == "GET":
-        data = Cm_model_detail.objects.all()
+        data = Cm_model_dsetail.objects.all()
 
         serializer = Cm_model_detail_Serializer(
             data, context={'request': request}, many=True)
@@ -46,3 +61,4 @@ def model_detail(request, pk):
     if request.method == "DELETE":
         cm_model.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+'''
