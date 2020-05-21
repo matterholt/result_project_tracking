@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 
 from .models import Cm_model_detail
 from .serializers import Cm_model_detail_Serializer
@@ -14,18 +14,31 @@ def home_view(request, *args, **kwargs):
 
 
 def model_view(request, model_id):
+    data = {
+        'id': model_id,
+
+    }
+    # convert to REST API
+    status = 200
     try:
         obj = Cm_model_detail.objects.get(id=model_id)
+        data["base_name"] = obj.base_model_name
+        data["cm_name"] = obj.cm_model_name
+        data["cm_description"] = obj.cm_model_description
+
     except Exception:
-        raise Http404
-    return HttpResponse(f"<h1>Model Details for <br> {obj}</h1>")
+        data['message'] = "NOT FOUND!!"
+        status = 404
+    # return HttpResponse(f"<h1>Model Details for <br> {obj}</h1>")
+
+    return JsonResponse(data, status=status)
 
 
 '''
 @api_view(['GET', 'POST'])
 def models_list(request):
     if request.method == "GET":
-        data = Cm_model_dsetail.objects.all()
+        data = Cm_model_detail.objects.all()
 
         serializer = Cm_model_detail_Serializer(
             data, context={'request': request}, many=True)
