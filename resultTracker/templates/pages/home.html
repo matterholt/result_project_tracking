@@ -4,7 +4,68 @@ Results Tracker Home
 
 {% endblock header_title %}
 
+
 {% block content %}
 <h1>Welcome to the model tracker<br> for the future</h1>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Cm Model Name</th>
+            <th scope="col">Model Description</th>
+            <th scope="col">Based Model Name</th>
+        </tr>
+    </thead>
+    <tbody id="Models">
+        <tr>
+            <th scope="row">1</th>
+            <td>V##R##</td>
+            <td><i>A little something</i></td>
+            <td>V##R##</td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    const modelElemID = document.getElementById("Models")
+    // CHANGE TO A FETCH!!
+    const xhr = new XMLHttpRequest()
+    const method = "GET"
+    const url = "/models"
+    const responseType = "json"
+
+    xhr.responseType = responseType;
+    xhr.open(method, url)
+    xhr.onload = function () {
+        let serverResp = xhr.response
+        let listedItems = (serverResp.response)
+        let htmlModelList = ""
+        for (var i = 0; i < listedItems.length; i++) {
+            console.log(listedItems[i])
+            /*
+            
+            TODO -> when no description or base is given
+
+            if (listedItems[i].cm_model_description === "") {
+                return "** NO DESCRIPTION **"
+            }
+            if (listedItems[i].base_model_name === null) {
+                return "NO BASE"
+            }
+*/
+            let currentRow = `
+                    <tr>
+                        <th scope="row">${listedItems[i].id}</th>
+                        <td>${listedItems[i].cm_model_name}</td>
+                        <td><i>${listedItems[i].cm_model_description}</i></td>
+                        <td>${listedItems[i].base_model_name}</td>
+                    </tr>
+            `
+            htmlModelList += currentRow
+        }
+        modelElemID.innerHTML = htmlModelList
+    }
+    xhr.send()
+</script>
 {% endblock content %}

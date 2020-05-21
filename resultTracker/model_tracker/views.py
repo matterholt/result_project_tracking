@@ -23,6 +23,7 @@ def model_list_view(request, *args, **kwargs):
                    } for x in qs]  # ! look into the way of looping!!
 
     data = {
+        "isUser": False,
         "response": model_list
     }
     return JsonResponse(data)
