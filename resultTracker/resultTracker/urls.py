@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
-from model_tracker.views import home_view, model_view
+from model_tracker.views import home_view, model_view, model_list_view
 from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", home_view),
+    path("models/", model_list_view),
     path("model_view/<int:model_id>/", model_view)
 
 

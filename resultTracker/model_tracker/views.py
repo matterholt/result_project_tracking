@@ -14,6 +14,20 @@ def home_view(request, *args, **kwargs):
     return render(request, "pages/home.html", context={}, status=200)
 
 
+def model_list_view(request, *args, **kwargs):
+    qs = Cm_model_detail.objects.all()
+    model_list = [{"id": x.id,
+                   "base_model_name": x.base_model_name,
+                   "cm_model_name": x.cm_model_name,
+                   "cm_model_description": x.cm_model_description
+                   } for x in qs]  # ! look into the way of looping!!
+
+    data = {
+        "response": model_list
+    }
+    return JsonResponse(data)
+
+
 def model_view(request, model_id):
     data = {
         'id': model_id,
@@ -23,9 +37,9 @@ def model_view(request, model_id):
     status = 200
     try:
         obj = Cm_model_detail.objects.get(id=model_id)
-        data["base_name"] = obj.base_model_name
-        data["cm_name"] = obj.cm_model_name
-        data["cm_description"] = obj.cm_model_description
+        data["base_model_name"] = obj.base_model_name
+        data["cm_model_name"] = obj.cm_model_name
+        data["cm_model_description"] = obj.cm_model_description
 
     except Exception:
         data['message'] = "NOT FOUND!!"
@@ -36,6 +50,8 @@ def model_view(request, model_id):
 
 
 '''
+Home previous example
+
 @api_view(['GET', 'POST'])
 def models_list(request):
     if request.method == "GET":
