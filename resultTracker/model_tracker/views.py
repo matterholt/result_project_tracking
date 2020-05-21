@@ -10,7 +10,8 @@ from .serializers import Cm_model_detail_Serializer
 
 
 def home_view(request, *args, **kwargs):
-    return HttpResponse("<h1>Hello track the model</h1>")
+    # return HttpResponse("<h1>Hello track the model</h1>") #--> static
+    return render(request, "pages/home.html", context={}, status=200)
 
 
 def model_view(request, model_id):
