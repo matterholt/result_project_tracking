@@ -41,36 +41,22 @@ Results Tracker Home
         let serverResp = xhr.response
         let listedItems = (serverResp.response)
         let htmlModelList = ""
+        
+        function isStrinEmpty(listItem){
+        // Possible to have an empty item when fetching data from DB
+            return checkListItem = listItem ? listItem : 'No Data <button> update </button>'  
+        }
+        
         for (var i = 0; i < listedItems.length; i++) {
             console.log(listedItems[i])
-            /*
-            
-            TODO -> when no description or base is given
-
-
-                1. turnary in the 
-                2. if statement eo
-                    let description = (listedItems[i].base_model_name)=>{ 
-                        if (listedItems[i].base_model_name === null) {
-                        return `<td>NO BASE`</td>`
-                        }else{
-                        return `<td>${listedItems[i].base_model_name}</td>`
-                        }
-                    }
-
-            if (listedItems[i].cm_model_description === "") {
-                return "** NO DESCRIPTION **"
-            }
-            if (listedItems[i].base_model_name === null) {
-                return "NO BASE"
-            }
-*/
+            if (listedItems[i].cm_model_description == fasle){ return `<td><i>NO Description, ADD??</i></td>`}
+            let modelDescription = `<td><i>${listedItems[i].cm_model_description}</i></td>` ? `<td><i>NO Description, ADD??</i></td>`
             let currentRow = `
                     <tr>
                         <th scope="row">${listedItems[i].id}</th>
                         <td>${listedItems[i].cm_model_name}</td>
-                        <td><i>${listedItems[i].cm_model_description}</i></td>
-                        <td>${listedItems[i].base_model_name}</td>
+                        <td><i>${isStrinEmpty(listedItems[i].cm_model_description)}</i></td>
+                        <td>${isStrinEmpty(listedItems[i].base_model_name)}</td>
                     </tr>
             `
             htmlModelList += currentRow
