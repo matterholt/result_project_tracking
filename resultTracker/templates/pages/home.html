@@ -15,14 +15,16 @@ Results Tracker Home
             <th scope="col">Cm Model Name</th>
             <th scope="col">Model Description</th>
             <th scope="col">Based Model Name</th>
+            <th scope="col">  </th>
         </tr>
     </thead>
     <tbody id="Models">
         <tr>
-            <th scope="row">1</th>
-            <td>V##R##</td>
-            <td><i>A little something</i></td>
-            <td>V##R##</td>
+            <th scope="row"></th>
+            <td></td>
+            <td style="font-size:100px; font-weight: 900; color:lightgray"><i>No Data.. </i></td>
+            <td></td>
+            
         </tr>
     </tbody>
 </table>
@@ -41,22 +43,22 @@ Results Tracker Home
         let serverResp = xhr.response
         let listedItems = (serverResp.response)
         let htmlModelList = ""
-        
-        function isStrinEmpty(listItem){
-        // Possible to have an empty item when fetching data from DB
-            return checkListItem = listItem ? listItem : 'No Data <button> update </button>'  
+
+        function isStringEmpty(listItem) {
+            // 
+            return checkListItem = listItem ? listItem :
+                `<span style = "color:lightgray" > No Data...</span>`
         }
-        
+
         for (var i = 0; i < listedItems.length; i++) {
-            console.log(listedItems[i])
-            if (listedItems[i].cm_model_description == fasle){ return `<td><i>NO Description, ADD??</i></td>`}
-            let modelDescription = `<td><i>${listedItems[i].cm_model_description}</i></td>` ? `<td><i>NO Description, ADD??</i></td>`
+
             let currentRow = `
                     <tr>
                         <th scope="row">${listedItems[i].id}</th>
                         <td>${listedItems[i].cm_model_name}</td>
-                        <td><i>${isStrinEmpty(listedItems[i].cm_model_description)}</i></td>
-                        <td>${isStrinEmpty(listedItems[i].base_model_name)}</td>
+                        <td><i>${isStringEmpty(listedItems[i].cm_model_description)}</i></td>
+                        <td>${isStringEmpty(listedItems[i].base_model_name)}</td>
+                        <td> <button type="button" class="btn btn-outline-primary btn-sm">Results</button> </td>
                     </tr>
             `
             htmlModelList += currentRow
