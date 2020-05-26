@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block header_title %}
+Results Tracker Home
+
+{% endblock header_title %}
+
+
+{% block content %}
+<h1>Detail Results</h1>
+<div id="modelDetails">
+
+</div>
+
+
+
+<script>
+    const modelDivBlock = document.getElementById("modelDetails")
+    const model_id = 1
+    fetch(`/model_view/${model_id}`)
+        .then(response => response.json())
+        .then(data => console.log(JSON.stringify(data)))
+</script>
+{% endblock content %}

@@ -49,8 +49,6 @@ Results Tracker Home
                 `<span style = "color:lightgray" > No Data...</span>`
         }
 
-        //
-        //https://youtu.be/f1R_bykXHGE?t=4731
         for (var i = 0; i < listedItems.length; i++) {
 
             let currentRow = `
@@ -59,7 +57,7 @@ Results Tracker Home
                         <td>${listedItems[i].cm_model_name}</td>
                         <td><i>${isStringEmpty(listedItems[i].cm_model_description)}</i></td>
                         <td>${isStringEmpty(listedItems[i].base_model_name)}</td>
-                        <td> <a href="#">Results</a> </td>
+                        <td> <a href="/model_detail/${listedItems[i].id}">Results</a> </td>
                     </tr>
             `
             htmlModelList += currentRow
