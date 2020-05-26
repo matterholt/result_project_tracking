@@ -15,9 +15,15 @@ def home_view(request, *args, **kwargs):
 
 
 def model_list_view(request, *args, **kwargs):
+    """
+    List of all models added to the database
+    User will be able to retrieve all models added under the 
+    assigned project which will be implemented in the future
+
+    """
     qs = Cm_model_detail.objects.all()
     model_list = [{"id": x.id,
-                   "base_model_name": x.base_model_name,
+                   "base_model_name": x.base_model_name, # REMOVE BASE MODEL FROM TABLE REDUCE AMOUNT OF INFO ON MAIN PAGE??
                    "cm_model_name": x.cm_model_name,
                    "cm_model_description": x.cm_model_description
                    } for x in qs]  # ! look into the way of looping!!
@@ -29,18 +35,25 @@ def model_list_view(request, *args, **kwargs):
     return JsonResponse(data)
 
 
-def model_view(request, model_id):
+def model_view(request= model_id):
+    """
+    model detail's
+    User selects specific model to 
+    
+    """
     data = {
         'id': model_id,
-
     }
     # convert to REST API
     status = 200
     try:
+        # searches the cm model detail to get model detail
         obj = Cm_model_detail.objects.get(id=model_id)
         data["base_model_name"] = obj.base_model_name
         data["cm_model_name"] = obj.cm_model_name
         data["cm_model_description"] = obj.cm_model_description
+        # searches the results DB to retrive results or judgement of analysis??
+        # CREATE A NEW DATABSE WITH JUDGEMENT, stiffness, dura, static , and other
 
     except Exception:
         data['message'] = "NOT FOUND!!"
