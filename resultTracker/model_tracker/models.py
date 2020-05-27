@@ -11,14 +11,22 @@ class Cm_model_detail(models.Model):
 
     def __str__(self):
         return self.cm_model_name
+"""
+Add new model for analysis details
 
+class Analysis_details(models.Model):
+    analysis_performed = models.CharField()
+    judgement = "" # should be default = None, Improved, OK, NG
+    didPerform = # bool
+    foreignID  = # model name as referance
+
+
+"""
 
 '''
 class Cm_stiffness(models.Model):
     pch_file = models.FileField(upload_to='MEDIA_ROOT/pchResult/',
      blank=True, null=True)
-
-
 
 location_load_applied TEXT NOT NULL,
 node_number REAL,
