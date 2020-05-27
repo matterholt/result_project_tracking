@@ -6,6 +6,7 @@ from rest_framework import status
 from django.http import HttpResponse, Http404, JsonResponse
 
 from .models import Cm_model_detail
+from .forms import Cm_model_form
 from .serializers import Cm_model_detail_Serializer
 
 
@@ -33,6 +34,17 @@ def model_list_view(request, *args, **kwargs):
         "response": model_list
     }
     return JsonResponse(data)
+
+
+def model_form(request, *args, **kwargs):
+    # https://youtu.be/f1R_bykXHGE?t=6804
+    form = Cm_model_form(request.POST or None)
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.save()
+        form = Cm_model_form()
+
+    return render(request, "components/form.html", context={"form": form})
 
 
 def model_detail_view(request, model_id):
