@@ -38,7 +38,9 @@ def model_list_view(request, *args, **kwargs):
 
 def model_form(request, *args, **kwargs):
     # https://youtu.be/f1R_bykXHGE?t=6804
+
     form = Cm_model_form(request.POST or None)
+    print(form)
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
@@ -48,7 +50,15 @@ def model_form(request, *args, **kwargs):
 
 
 def model_detail_view(request, model_id):
-    return render(request, "pages/modelDetail.html", context={}, status=200)
+    data = {
+        'id': model_id,
+    }
+    try:
+        model_detail = Cm_model_detail(id=model_id)
+    except Question.DoesNotExist:
+        raise Http404("Question does not exist")
+    return render(request, "pages/modelDetail.html", context={"id": model_id},
+                  status=200)
 
 
 def model_view(request, model_id):
@@ -69,7 +79,6 @@ def model_view(request, model_id):
     except Exception:
         data['message'] = "NOT FOUND!!"
         status = 404
-    # return HttpResponse(f"<h1>Model Details for <br> {obj}</h1>")
 
     return JsonResponse(data, status=status)
 
