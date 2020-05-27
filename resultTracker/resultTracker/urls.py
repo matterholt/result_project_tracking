@@ -22,10 +22,10 @@ from model_tracker.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", home_view),
-    path("createModel/", model_form),
-    path("models/", model_list_view),
-    path("model_detail/<int:model_id>/", model_detail_view),
-    path("model_view/<int:model_id>/", model_view)
+    path("createModel", model_form),
+    path("models", model_list_view),
+    path("model_detail/<int:model_id>", model_detail_view),
+    path("model_view/<int:model_id>", model_view)
 
 
     # hold till future

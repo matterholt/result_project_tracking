@@ -8,15 +8,18 @@ Results Tracker Home
 
 {% block content %}
 <div class="col-4 mb-4">
-    <form method="POST" action="/model_form" class="form">
+    <form method="POST" action="/createModel" class="form">
+        {% csrf_token %}
         <h2>Add CM Details</h2>
+
         <input type="hidden" value='/' name="next" />
+
         <label for="cmVerRev">CM Model Ver Rev:</label>
-        <input id="cmVerRev" type="text" required="required" name="cmVerRev" placeholder="VxxRxx" />
+        <input class="form-control" id="cmVerRev" type="text" name="cmVerRev" placeholder="VxxRxx" />
         <label for="baseVerRev">Base Model Ver Rev:</label>
-        <input id="baseVerRev" type="text" name="baseVerRev" placeholder="VxxRxx" />
+        <input class="form-control" id="baseVerRev" type="text" name="baseVerRev" placeholder="VxxRxx" />
         <label for="cmModeldescription">Add CM Desciption</label>
-        <textarea id="cmModeldescription" name="cmModeldescription"></textarea>
+        <textarea class="form-control" id="cmModeldescription" name="cmModeldescription"></textarea>
         <button class="btn btn-primary" type="submit">submit</button>
     </form>
 
