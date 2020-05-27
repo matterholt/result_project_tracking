@@ -15,19 +15,29 @@
         {% endblock header_title %}
     </title>
     <style>
-        .twt{
+        .twt {
             color: #3CA2A2;
         }
-        header{
+
+        header {
             background-color: #215A6D;
+            padding: 25px;
+            color: white;
         }
     </style>
 </head>
 
 <body>
-    {% block content %}
+    <header>
+        <h1>Model Tracker</h1>
+    </header>
 
-    {% endblock content %}
+
+    <main class="container-fluid">
+        {% block content %}
+
+        {% endblock content %}
+    </main>
 
 
     <!-- Optional JavaScript -->
