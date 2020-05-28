@@ -9,7 +9,7 @@ Results Tracker Home
 {% block content %}
 
 <div class="col-4 mb-4">
-    <form method="POST" action="/createModel" class="form">
+    <form method="POST" action="/createModel" class="form" id="create_model_form">
         {% csrf_token %}
         <h2>Add CM Details</h2>
 
@@ -46,29 +46,42 @@ Results Tracker Home
 </table>
 
 <script>
-    const modelElemID = document.getElementById("Models")
+    function handleModelCreateForm(event) {
+        event.preventDefault()
+        console.log(event)
+
+    }
+    const crateModelFormEl = document.getElementById("create_model_form")
+    crateModelFormEl.addEventListener("submit", handleModelCreateForm)
     // CHANGE TO A FETCH!!
-    const xhr = new XMLHttpRequest()
-    const method = "GET"
-    const url = "/models"
-    const responseType = "json"
 
-    xhr.responseType = responseType;
-    xhr.open(method, url)
-    xhr.onload = function () {
-        let serverResp = xhr.response
-        let listedItems = (serverResp.response)
-        let htmlModelList = ""
 
-        function isStringEmpty(listItem) {
-            // 
-            return checkListItem = listItem ? listItem :
-                `<span style = "color:lightgray" > No Data...</span>`
-        }
 
-        for (var i = 0; i < listedItems.length; i++) {
 
-            let currentRow = `
+    const modelElemID = document.getElementById("Models")
+
+    function loadModels(modelElem) {
+        const xhr = new XMLHttpRequest()
+        const method = "GET"
+        const url = "/models"
+        const responseType = "json"
+
+        xhr.responseType = responseType;
+        xhr.open(method, url)
+        xhr.onload = function () {
+            let serverResp = xhr.response
+            let listedItems = (serverResp.response)
+            let htmlModelList = ""
+
+            function isStringEmpty(listItem) {
+                // 
+                return checkListItem = listItem ? listItem :
+                    `<span style = "color:lightgray" > No Data...</span>`
+            }
+
+            for (var i = 0; i < listedItems.length; i++) {
+
+                let currentRow = `
                     <tr id='result_'+${listedItems[i].id}''>
                         <th scope="row">${listedItems[i].id}</th>
                         <td>${listedItems[i].cm_model_name}</td>
@@ -77,10 +90,13 @@ Results Tracker Home
                         <td> <a href="/model_detail/${listedItems[i].id}">Results</a> </td>
                     </tr>
             `
-            htmlModelList += currentRow
+                htmlModelList += currentRow
+            }
+            modelElem.innerHTML = htmlModelList
         }
-        modelElemID.innerHTML = htmlModelList
+        xhr.send()
     }
-    xhr.send()
+
+    loadModels(modelElemID)
 </script>
 {% endblock content %}
