@@ -25,7 +25,8 @@ SECRET_KEY = 'test'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# 'donDomain.com' -> if any domain is allowed
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # remove cors , need to update later
 CORS_ORIGIN_ALLOW_ALL = True

@@ -1,4 +1,7 @@
+from django.conf import settings
 from django.shortcuts import render, redirect
+from django.utils.http import is_safe_url
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -8,6 +11,8 @@ from django.http import HttpResponse, Http404, JsonResponse
 from .models import Cm_model_detail
 from .forms import Cm_model_form
 from .serializers import Cm_model_detail_Serializer
+
+ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 
 def home_view(request, *args, **kwargs):
@@ -44,7 +49,7 @@ def model_form(request, *args, **kwargs):
         obj = form.save(commit=False)
         obj.save()
         form = Cm_model_form()
-        if next_url != None:
+        if next_url is not None and is_safe_url(next_url, ALLOWED_HOSTS):
             return redirect(next_url)
     return render(request, "components/form.html", context={"form": form})
 
