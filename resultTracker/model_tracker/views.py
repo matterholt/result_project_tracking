@@ -37,15 +37,11 @@ def model_list_view(request, *args, **kwargs):
 
 
 def model_form(request, *args, **kwargs):
-    # https: // youtu.be/f1R_bykXHGE?t = 6448
-
-    print(request.POST)
     form = Cm_model_form(request.POST or None)
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
         form = Cm_model_form()
-
     return render(request, "components/form.html", context={"form": form})
 
 
