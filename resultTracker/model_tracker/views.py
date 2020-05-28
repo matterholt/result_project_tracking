@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -38,10 +38,14 @@ def model_list_view(request, *args, **kwargs):
 
 def model_form(request, *args, **kwargs):
     form = Cm_model_form(request.POST or None)
+    print(request.POST)
+    next_url = request.POST.get('next') or None
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
         form = Cm_model_form()
+        if next_url != None:
+            return redirect(next_url)
     return render(request, "components/form.html", context={"form": form})
 
 
