@@ -46,19 +46,32 @@ Results Tracker Home
 </table>
 
 <script>
-    function handleModelCreateForm(event) {
-        event.preventDefault()
-        console.log(event)
-
-    }
     const crateModelFormEl = document.getElementById("create_model_form")
     crateModelFormEl.addEventListener("submit", handleModelCreateForm)
     // CHANGE TO A FETCH!!
 
-
-
-
     const modelElemID = document.getElementById("Models")
+
+
+    function handleModelCreateForm(event) {
+        event.preventDefault()
+        const formSending = event.target
+        const formData = new FormData(formSending)
+        const url = formSending.getAttribute("action")
+        const method = formSending.getAttribute("method")
+
+        const xhr = new XMLHttpRequest()
+        xhr.open(method, url)
+        xhr.onload = function () {
+            const serverResponse = xhr.response
+            //console.log(serverResponse)
+            loadModels(modelElemID)
+        }
+        xhr.send(formData)
+
+
+    }
+
 
     function loadModels(modelElem) {
         const xhr = new XMLHttpRequest()
