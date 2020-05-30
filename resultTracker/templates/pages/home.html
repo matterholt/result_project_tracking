@@ -62,9 +62,11 @@ Results Tracker Home
 
         const xhr = new XMLHttpRequest()
         xhr.open(method, url)
+        xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
+        xhr.setRequestHeader("X-Requested-with", "XMLHttpRequest")
         xhr.onload = function () {
             const serverResponse = xhr.response
-            //console.log(serverResponse)
+            console.log(xhr.status, serverResponse)
             loadModels(modelElemID)
         }
         xhr.send(formData)
