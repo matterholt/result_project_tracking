@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "django_serv/bin/python",
+    "python.pythonPath": "/Users/matterholt/.local/share/virtualenvs/fea_results-Y4Q5rguQ/bin/python",
     "python.linting.pycodestyleEnabled": false,
     "python.linting.flake8Enabled": true,
     "python.linting.enabled": true,
