@@ -23,16 +23,11 @@ def home_view(request, *args, **kwargs):
 def model_list_view(request, *args, **kwargs):
     """
     List of all models added to the database
-    User will be able to retrieve all models added under the 
+    User will be able to retrieve all models added under the
     assigned project which will be implemented in the future
     """
     qs = Cm_model_detail.objects.all()
-    model_list = [{"id": x.id,
-                   # REMOVE BASE MODEL FROM TABLE REDUCE AMOUNT OF INFO ON MAIN PAGE??
-                   "base_model_name": x.base_model_name,
-                   "cm_model_name": x.cm_model_name,
-                   "cm_model_description": x.cm_model_description
-                   } for x in qs]  # ! look into the way of looping!!
+    model_list = [x.serialize() for x in qs]
 
     data = {
         "isUser": False,
@@ -43,15 +38,14 @@ def model_list_view(request, *args, **kwargs):
 
 def model_form(request, *args, **kwargs):
     form = Cm_model_form(request.POST or None)
-    print("ajax", request.is_ajax())
     next_url = request.POST.get('next') or None
 
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
 
-        if request.is_ajax():
-            return JsonResponse({}, status=201)
+        if request.is_ajax() is True:
+            return JsonResponse(obj.serialize(), status=201)
 
         if next_url is not None and is_safe_url(next_url, ALLOWED_HOSTS):
             return redirect(next_url)

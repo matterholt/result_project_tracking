@@ -50,8 +50,11 @@ Results Tracker Home
     crateModelFormEl.addEventListener("submit", handleModelCreateForm)
     // CHANGE TO A FETCH!!
 
-    const modelElemID = document.getElementById("Models")
+    const modelElemContainer = document.getElementById("Models")
 
+    function HandleAllRequest() {
+        // remove the xhr and replace with a fetch
+    }
 
     function handleModelCreateForm(event) {
         event.preventDefault()
@@ -59,15 +62,20 @@ Results Tracker Home
         const formData = new FormData(formSending)
         const url = formSending.getAttribute("action")
         const method = formSending.getAttribute("method")
+        const responseType = "json"
+
 
         const xhr = new XMLHttpRequest()
         xhr.open(method, url)
         xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
         xhr.setRequestHeader("X-Requested-with", "XMLHttpRequest")
+        xhr.responseType = responseType;
         xhr.onload = function () {
-            const serverResponse = xhr.response
-            console.log(xhr.status, serverResponse)
-            loadModels(modelElemID)
+            if (xhr.status === 201) {
+                const newModel = xhr.response
+                const newModelElement = elementFormat(newModel)
+                console.log(newModelElement)
+            }
         }
         xhr.send(formData)
 
@@ -80,7 +88,6 @@ Results Tracker Home
         const method = "GET"
         const url = "/models"
         const responseType = "json"
-
         xhr.responseType = responseType;
         xhr.open(method, url)
         xhr.onload = function () {
@@ -88,23 +95,8 @@ Results Tracker Home
             let listedItems = (serverResp.response)
             let htmlModelList = ""
 
-            function isStringEmpty(listItem) {
-                // 
-                return checkListItem = listItem ? listItem :
-                    `<span style = "color:lightgray" > No Data...</span>`
-            }
-
             for (var i = 0; i < listedItems.length; i++) {
-
-                let currentRow = `
-                    <tr id='result_'+${listedItems[i].id}''>
-                        <th scope="row">${listedItems[i].id}</th>
-                        <td>${listedItems[i].cm_model_name}</td>
-                        <td><i>${isStringEmpty(listedItems[i].cm_model_description)}</i></td>
-                        <td>${isStringEmpty(listedItems[i].base_model_name)}</td>
-                        <td> <a href="/model_detail/${listedItems[i].id}">Results</a> </td>
-                    </tr>
-            `
+                const currentRow = elementFormat(listedItems[i])
                 htmlModelList += currentRow
             }
             modelElem.innerHTML = htmlModelList
@@ -112,6 +104,25 @@ Results Tracker Home
         xhr.send()
     }
 
-    loadModels(modelElemID)
+    function elementFormat(objItem) {
+        function isStringEmpty(listItem) {
+            // 
+            return checkListItem = listItem ? listItem :
+                `<span style = "color:lightgray" > No Data...</span>`
+        }
+        let formatRow = `
+                    <tr id='result_'+${objItem.id}''>
+                        <th scope="row">${objItem.id}</th>
+                        <td>${objItem.cm_model_name}</td>
+                        <td><i>${isStringEmpty(objItem.cm_model_description)}</i></td>
+                        <td>${isStringEmpty(objItem.base_model_name)}</td>
+                        <td> <a href="/model_detail/${objItem.id}">Results</a> </td>
+                    </tr>
+            `
+        return (formatRow)
+
+    }
+
+    loadModels(modelElemContainer)
 </script>
 {% endblock content %}

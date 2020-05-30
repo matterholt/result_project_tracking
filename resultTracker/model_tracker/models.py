@@ -11,6 +11,15 @@ class Cm_model_detail(models.Model):
 
     def __str__(self):
         return self.cm_model_name
+
+    def serialize(self):
+        return {"id": self.id,
+                "base_model_name": self.base_model_name,
+                "cm_model_name": self.cm_model_name,
+                "cm_model_description": self.cm_model_description
+                }
+
+
 """
 Add new model for analysis details
 
