@@ -39,7 +39,7 @@ def model_list_view(request, *args, **kwargs):
 def model_form(request, *args, **kwargs):
     form = Cm_model_form(request.POST or None)
     next_url = request.POST.get('next') or None
-
+    print(request.is_ajax())
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()

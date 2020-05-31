@@ -48,13 +48,9 @@ Results Tracker Home
 <script>
     const crateModelFormEl = document.getElementById("create_model_form")
     crateModelFormEl.addEventListener("submit", handleModelCreateForm)
-    // CHANGE TO A FETCH!!
-
     const modelElemContainer = document.getElementById("Models")
 
-    function HandleAllRequest() {
-        // remove the xhr and replace with a fetch
-    }
+
 
     function handleModelCreateForm(event) {
         event.preventDefault()
@@ -69,25 +65,27 @@ Results Tracker Home
         xhr.open(method, url)
         xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
         xhr.setRequestHeader("X-Requested-with", "XMLHttpRequest")
+
         xhr.responseType = responseType;
         xhr.onload = function () {
             if (xhr.status === 201) {
                 const newModel = xhr.response
                 const newModelElement = elementFormat(newModel)
-                console.log(newModelElement)
+                const displayed_model = modelElemContainer.innerHTML
+                modelElemContainer.innerHTML = newModelElement + displayed_model
+                formSending.reset()
+
             }
         }
         xhr.send(formData)
-
-
     }
-
 
     function loadModels(modelElem) {
         const xhr = new XMLHttpRequest()
         const method = "GET"
         const url = "/models"
         const responseType = "json"
+
         xhr.responseType = responseType;
         xhr.open(method, url)
         xhr.onload = function () {
@@ -103,6 +101,7 @@ Results Tracker Home
         }
         xhr.send()
     }
+    loadModels(modelElemContainer)
 
     function elementFormat(objItem) {
         function isStringEmpty(listItem) {
@@ -122,7 +121,5 @@ Results Tracker Home
         return (formatRow)
 
     }
-
-    loadModels(modelElemContainer)
 </script>
 {% endblock content %}

@@ -12,6 +12,9 @@ class Cm_model_detail(models.Model):
     def __str__(self):
         return self.cm_model_name
 
+    class Meta:
+        ordering = ['-id']
+
     def serialize(self):
         return {"id": self.id,
                 "base_model_name": self.base_model_name,
