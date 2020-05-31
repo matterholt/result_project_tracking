@@ -13,7 +13,7 @@ class Cm_model_form (ModelForm):
 
     def clean_inputs(self):
         # form validation to help
-        model_name = self.clean_data.get("cm_model_name")
-        if len(model_name) > MAX_NAME_LENGTH:
+        model_description = self.clean_data.get("cm_model_description")
+        if len(model_description) > self.MAX_NAME_LENGTH:
             raise forms.ValidationError("Name is too long ")
-        return model_name
+        return model_description

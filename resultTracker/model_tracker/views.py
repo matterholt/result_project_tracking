@@ -39,7 +39,7 @@ def model_list_view(request, *args, **kwargs):
 def model_form(request, *args, **kwargs):
     form = Cm_model_form(request.POST or None)
     next_url = request.POST.get('next') or None
-    print(request.is_ajax())
+    print(request.is_ajax)
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
@@ -49,8 +49,11 @@ def model_form(request, *args, **kwargs):
 
         if next_url is not None and is_safe_url(next_url, ALLOWED_HOSTS):
             return redirect(next_url)
+    if form.errors:
+        if request.is_ajax():
+            return JsonResponse(form.errors, status=400)
 
-        form = Cm_model_form()
+    form = Cm_model_form()
 
     return render(request, "components/form.html", context={"form": form})
 
