@@ -12,9 +12,8 @@ Results Tracker Home
     <form method="POST" action="/createModel" class="form" id="create_model_form">
         {% csrf_token %}
         <h2>Add CM Details</h2>
-
+        <div class="d-none alert alert-danger" id='model_create_error'></div>
         <input type="hidden" value='/' name="next" />
-
         <label for="cm_model_name">CM Model Ver Rev:</label>
         <input class="form-control" id="cm_model_name" type="text" required name="cm_model_name" placeholder="VxxRxx" />
         <label for="base_model_name">Base Model Ver Rev:</label>
@@ -51,6 +50,18 @@ Results Tracker Home
     const modelElemContainer = document.getElementById("Models")
 
 
+    function handleModelError(msg, display) {
+        const errorDiv = document.getElementById("model_create_error")
+        if (display == true) {
+            errorDiv.setAttribute("class", "alert-danger")
+            errorDiv.innerHTML = msg
+        } else {
+            errorDiv.setAttribute("class", "d-none alert alert-danger")
+        }
+
+    }
+
+
 
     function handleModelCreateForm(event) {
         event.preventDefault()
@@ -69,6 +80,7 @@ Results Tracker Home
         xhr.responseType = responseType;
         xhr.onload = function () {
             if (xhr.status === 201) {
+                handleModelError("NO_ERROR", false)
                 const newModel = xhr.response
                 const newModelElement = elementFormat(newModel)
                 const displayed_model = modelElemContainer.innerHTML
@@ -77,11 +89,24 @@ Results Tracker Home
 
             } else if (xhr.status === 400) {
                 const errorJson = xhr.response
+                const contentError = errorJson.cm_model_description
                 console.log(errorJson)
+                let contentErrorMsg;
+                if (contentError) {
+                    contentErrorMsg = contentError[0]
+                    if (contentErrorMsg) {
+                        handleModelError(contentErrorMsg, true)
+                    } else {
+                        alert("Error has occurred. try again?>> LAYER TWO")
+                    }
+                } else {
+                    alert("Error has occurred. try again?->LAYER ONE")
+                }
+
 
             } else if (xhr.status = 500) {
                 // able to put a range of server code to cover errors
-                alert("There is a server Error, try again")
+                alert("There is a server Error, try again >> LAYOUER 500")
             }
         }
 
