@@ -37,11 +37,20 @@ def model_list_view(request, *args, **kwargs):
 
 
 def model_form(request, *args, **kwargs):
+    user = request.user
+
+    if not user.is_authenticated:
+        user = None
+        if request.is_ajax():
+            return JsonResponse({}, status=401)
+        return redirect(settings.LOGIN_URL)
+
     form = Cm_model_form(request.POST or None)
     next_url = request.POST.get('next') or None
     print(request.is_ajax)
     if form.is_valid():
         obj = form.save(commit=False)
+        obj.user = user
         obj.save()
 
         if request.is_ajax() is True:

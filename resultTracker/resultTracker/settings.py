@@ -27,6 +27,7 @@ DEBUG = True
 
 # 'donDomain.com' -> if any domain is allowed
 ALLOWED_HOSTS = ['127.0.0.1']
+LOGIN_URL = "/login"
 
 # remove cors , need to update later
 CORS_ORIGIN_ALLOW_ALL = True
