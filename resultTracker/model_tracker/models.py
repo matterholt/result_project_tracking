@@ -1,9 +1,12 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
+User = settings.AUTH_USER_MODEL
 
 
 class Cm_model_detail(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     base_model_name = models.CharField(max_length=100, blank=True, null=True)
     cm_model_name = models.CharField(max_length=100, unique=True, )
     cm_model_description = models.CharField(
