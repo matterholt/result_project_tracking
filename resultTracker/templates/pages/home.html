@@ -1,0 +1,173 @@
+{% extends '../components/base.html' %}
+
+
+{% block header_title %}
+Results Tracker Home
+{% endblock header_title %}
+
+
+{% block content %}
+
+<div class="col-4 mb-4">
+    <form method="POST" action="/createModel" class="form" id="create_model_form">
+        {% csrf_token %}
+        <h2>Add CM Details</h2>
+        <div class="d-none alert alert-danger" id='model_create_error'></div>
+        <input type="hidden" value='/' name="next" />
+        <label for="cm_model_name">CM Model Ver Rev:</label>
+        <input class="form-control" id="cm_model_name" type="text" required name="cm_model_name" placeholder="VxxRxx" />
+        <label for="base_model_name">Base Model Ver Rev:</label>
+        <input class="form-control" id="base_model_name" type="text" name="base_model_name" placeholder="VxxRxx" />
+        <label for="cm_model_description">Add CM Description</label>
+        <textarea class="form-control" id="cm_model_description" name="cm_model_description"></textarea>
+        <button class="btn btn-primary" type="submit">submit</button>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Cm Model</th>
+            <th scope="col">Model Description</th>
+            <th scope="col">Based Model</th>
+            <th scope="col">Results</th>
+        </tr>
+    </thead>
+    <tbody id="Models">
+        <tr>
+            <th scope="row"></th>
+            <td></td>
+            <td style="font-size:100px; font-weight: 900; color:lightgray"><i>No Data.. </i></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    const crateModelFormEl = document.getElementById("create_model_form")
+    crateModelFormEl.addEventListener("submit", handleModelCreateForm)
+    const modelElemContainer = document.getElementById("Models")
+
+
+    function handleModelError(msg, display) {
+        const errorDiv = document.getElementById("model_create_error")
+        if (display == true) {
+            errorDiv.setAttribute("class", "alert-danger")
+            errorDiv.innerHTML = msg
+        } else {
+            errorDiv.setAttribute("class", "d-none alert alert-danger")
+        }
+
+    }
+
+
+
+    function handleModelCreateForm(event) {
+        event.preventDefault()
+        const formSending = event.target
+        const formData = new FormData(formSending)
+        const url = formSending.getAttribute("action")
+        const method = formSending.getAttribute("method")
+        const responseType = "json"
+
+
+        const xhr = new XMLHttpRequest()
+        xhr.open(method, url)
+        xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
+        xhr.setRequestHeader("X-Requested-with", "XMLHttpRequest")
+
+        xhr.responseType = responseType;
+        xhr.onload = function () {
+            console.log(xhr.status)
+            if (xhr.status === 201) {
+
+                handleModelError("NO_ERROR", false)
+                const newModel = xhr.response
+                const newModelElement = elementFormat(newModel)
+                const displayed_model = modelElemContainer.innerHTML
+                modelElemContainer.innerHTML = newModelElement + displayed_model
+                formSending.reset()
+
+            } else if (xhr.status === 400) {
+
+                const errorJson = xhr.response
+                const contentError = errorJson.cm_model_description
+                console.log(errorJson)
+                let contentErrorMsg;
+                if (contentError) {
+                    contentErrorMsg = contentError[0]
+                    if (contentErrorMsg) {
+                        handleModelError(contentErrorMsg, true)
+                    } else {
+                        alert("Error has occurred. try again?>> LAYER TWO")
+                    }
+                } else {
+                    alert("Error has occurred. try again?->LAYER ONE")
+                }
+
+
+            } else if (xhr.status === 401) {
+
+                alert("Must Login")
+                window.location.href = "/login"
+            } else if (xhr.status === 500) {
+
+                // able to put a range of server code to cover errors
+                alert("There is a server Error, try again >> LAYOUER 500")
+            }
+        }
+
+
+        xhr.onerror = function () {
+            alert("Error occurred , try again later")
+        }
+        xhr.send(formData)
+    }
+
+    function loadModels(modelElem) {
+        const xhr = new XMLHttpRequest()
+        const method = "GET"
+        const url = "/models"
+        const responseType = "json"
+
+        xhr.responseType = responseType;
+        xhr.open(method, url)
+        xhr.onload = function () {
+            let serverResp = xhr.response
+            let listedItems = (serverResp.response)
+            let htmlModelList = ""
+
+            for (var i = 0; i < listedItems.length; i++) {
+                const currentRow = elementFormat(listedItems[i])
+                htmlModelList += currentRow
+            }
+            modelElem.innerHTML = htmlModelList
+        }
+        xhr.onerror = function () {
+            alert("Error, try again later")
+        }
+        xhr.send()
+    }
+    loadModels(modelElemContainer)
+
+    function elementFormat(objItem) {
+        function isStringEmpty(listItem) {
+            // 
+            return checkListItem = listItem ? listItem :
+                `<span style = "color:lightgray" > No Data...</span>`
+        }
+        let formatRow = `
+                    <tr id='result_'+${objItem.id}''>
+                        <th scope="row">${objItem.id}</th>
+                        <td>${objItem.cm_model_name}</td>
+                        <td><i>${isStringEmpty(objItem.cm_model_description)}</i></td>
+                        <td>${isStringEmpty(objItem.base_model_name)}</td>
+                        <td> <a href="/model_detail/${objItem.id}">Results</a> </td>
+                    </tr>
+            `
+        return (formatRow)
+
+    }
+</script>
+{% endblock content %}
