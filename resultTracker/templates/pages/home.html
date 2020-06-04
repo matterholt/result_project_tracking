@@ -79,7 +79,9 @@ Results Tracker Home
 
         xhr.responseType = responseType;
         xhr.onload = function () {
+            console.log(xhr.status)
             if (xhr.status === 201) {
+
                 handleModelError("NO_ERROR", false)
                 const newModel = xhr.response
                 const newModelElement = elementFormat(newModel)
@@ -88,6 +90,7 @@ Results Tracker Home
                 formSending.reset()
 
             } else if (xhr.status === 400) {
+
                 const errorJson = xhr.response
                 const contentError = errorJson.cm_model_description
                 console.log(errorJson)
@@ -104,11 +107,17 @@ Results Tracker Home
                 }
 
 
-            } else if (xhr.status = 500) {
+            } else if (xhr.status === 401) {
+
+                alert("Must Login")
+                window.location.href = "/login"
+            } else if (xhr.status === 500) {
+
                 // able to put a range of server code to cover errors
                 alert("There is a server Error, try again >> LAYOUER 500")
             }
         }
+
 
         xhr.onerror = function () {
             alert("Error occurred , try again later")

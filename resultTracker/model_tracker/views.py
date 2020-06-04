@@ -40,6 +40,7 @@ def model_form(request, *args, **kwargs):
     user = request.user
 
     if not user.is_authenticated:
+
         user = None
         if request.is_ajax():
             return JsonResponse({}, status=401)
