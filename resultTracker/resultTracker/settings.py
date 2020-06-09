@@ -28,6 +28,8 @@ DEBUG = True
 # 'donDomain.com' -> if any domain is allowed
 ALLOWED_HOSTS = ['127.0.0.1']
 LOGIN_URL = "/login"
+MAX_DESCRIPTION_LENGTH = 250
+
 
 # remove cors , need to update later
 CORS_ORIGIN_ALLOW_ALL = True
@@ -36,9 +38,12 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Application definition
 
 INSTALLED_APPS = [
+    # third party
     'rest_framework',
     # 'corsheaders',
+    # internal
     'model_tracker.apps.ModelTrackerConfig',
+    # django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

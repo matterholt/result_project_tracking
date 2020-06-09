@@ -17,14 +17,16 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from django.conf.urls import url
 from model_tracker.views import (
-    home_view, model_view, model_list_view, model_detail_view, model_form
+    home_view, model_view, model_form,
+    model_create_API, model_list_view_API, model_detail_view_API
 )
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", home_view),
-    path("createModel", model_form),
-    path("models", model_list_view),
-    path("model_detail/<int:model_id>", model_detail_view),
+    # path("createModel", model_form),
+    path("createModel", model_create_API),
+    path("models", model_list_view_API),
+    path("model_detail/<int:model_id>", model_detail_view_API),
     path("model_view/<int:model_id>", model_view)
 
 

@@ -1,11 +1,11 @@
+from django.conf import settings
 from django.forms import ModelForm
-
 from .models import Cm_model_detail
 
 
 class Cm_model_form (ModelForm):
 
-    MAX_NAME_LENGTH = 10
+    MAX_DESCRIPTION_LENGTH = settings.MAX_DESCRIPTION_LENGTH
 
     class Meta:
         model = Cm_model_detail
@@ -14,6 +14,6 @@ class Cm_model_form (ModelForm):
     def clean_inputs(self):
         # form validation to help
         model_description = self.clean_data.get("cm_model_description")
-        if len(model_description) > self.MAX_NAME_LENGTH:
+        if len(model_description) > self.MAX_DESCRIPTION_LENGTH:
             raise forms.ValidationError("Name is too long ")
         return model_description

@@ -19,8 +19,39 @@ def home_view(request, *args, **kwargs):
     # return HttpResponse("<h1>Hello track the model</h1>") #--> static
     return render(request, "pages/home.html", context={}, status=200)
 
+# add decorators to assign what method you would like to request
 
-def model_list_view(request, *args, **kwargs):
+
+@api_view(['GET'])
+def model_list_view_API(request, *arg, **kwargs):
+    qs = Cm_model_detail.objects.all()
+
+    serializer = Cm_model_detail_Serializer(qs, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def model_detail_view_API(request, model_id, * arg, **kwargs):
+    qs = Cm_model_detail.objects.filter(id=model_id)
+    if not qs:
+        return Respose({'message': "item not found"}, status=404)
+    obj = qs.first()
+    serializer = Cm_model_detail_Serializer(obj)
+    return Response(serializer.data, status=200)
+
+
+@api_view(['POST'])
+def model_create_API(request, *args, **kwargs):
+
+    serializer = Cm_model_detail_Serializer(data=request.POST)
+
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=201)
+    return Response({}, status=400)
+
+
+def model_list_view_pureDjango(request, *args, **kwargs):
     """
     List of all models added to the database
     User will be able to retrieve all models added under the
@@ -68,16 +99,16 @@ def model_form(request, *args, **kwargs):
     return render(request, "components/form.html", context={"form": form})
 
 
-def model_detail_view(request, model_id):
-    data = {
-        'id': model_id,
-    }
-    try:
-        model_detail = Cm_model_detail(id=model_id)
-    except Question.DoesNotExist:
-        raise Http404("Question does not exist")
-    return render(request, "pages/modelDetail.html", context={"id": model_id},
-                  status=200)
+# def model_detail_view(request, model_id):
+#     data = {
+#         'id': model_id,
+#     }
+#     try:
+#         model_detail = Cm_model_detail(id=model_id)
+#     except Question.DoesNotExist:
+#         raise Http404("Question does not exist")
+#     return render(request, "pages/modelDetail.html", context={"id": model_id},
+#                   status=200)
 
 
 def model_view(request, model_id):
@@ -100,48 +131,3 @@ def model_view(request, model_id):
         status = 404
 
     return JsonResponse(data, status=status)
-
-
-'''
-Home previous example
-
-@api_view(['GET', 'POST'])
-def models_list(request):
-    if request.method == "GET":
-        data = Cm_model_detail.objects.all()
-
-        serializer = Cm_model_detail_Serializer(
-            data, context={'request': request}, many=True)
-
-        return Response(serializer.data)
-
-    elif request.method == "POST":
-        serializer = Cm_model_detail_Serializer(data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
-
-
-@api_view(['PUT', 'DELETE'])
-def model_detail(request, pk):
-    # first check to see if the model is in db
-    try:
-        cm_model = Cm_model_detail.objects.get(pk=pk)
-    except Cm_model_detail.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == "PUT":
-        serializer = Cm_model_detail_Serializer(
-            cm_model, data=request.data, context={'request': request})
-
-        # confirm that data matches the serializer
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    if request.method == "DELETE":
-        cm_model.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-'''
