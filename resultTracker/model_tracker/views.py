@@ -3,7 +3,13 @@ from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
 
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+# permission_classes -> able to add complex permissions
+from rest_framework.decorators import (api_view, permission_classes,
+                                       authentication_classes)
+# able to add custom auth
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 from rest_framework import status
 
 from django.http import HttpResponse, Http404, JsonResponse
@@ -25,7 +31,6 @@ def home_view(request, *args, **kwargs):
 @api_view(['GET'])
 def model_list_view_API(request, *arg, **kwargs):
     qs = Cm_model_detail.objects.all()
-
     serializer = Cm_model_detail_Serializer(qs, many=True)
     return Response(serializer.data)
 
@@ -41,8 +46,10 @@ def model_detail_view_API(request, model_id, * arg, **kwargs):
 
 
 @api_view(['POST'])
+# REST API course for more detail and class base views
+@authentication_classes([SessionAuthentication])
+@permission_classes([IsAuthenticated])
 def model_create_API(request, *args, **kwargs):
-
     serializer = Cm_model_detail_Serializer(data=request.POST)
 
     if serializer.is_valid(raise_exception=True):
@@ -51,12 +58,13 @@ def model_create_API(request, *args, **kwargs):
     return Response({}, status=400)
 
 
+'''
+Below is a more traditional server responses and are Pure django
+'''
+
+
 def model_list_view_pureDjango(request, *args, **kwargs):
-    """
-    List of all models added to the database
-    User will be able to retrieve all models added under the
-    assigned project which will be implemented in the future
-    """
+
     qs = Cm_model_detail.objects.all()
     model_list = [x.serialize() for x in qs]
 
@@ -97,18 +105,6 @@ def model_form(request, *args, **kwargs):
     form = Cm_model_form()
 
     return render(request, "components/form.html", context={"form": form})
-
-
-# def model_detail_view(request, model_id):
-#     data = {
-#         'id': model_id,
-#     }
-#     try:
-#         model_detail = Cm_model_detail(id=model_id)
-#     except Question.DoesNotExist:
-#         raise Http404("Question does not exist")
-#     return render(request, "pages/modelDetail.html", context={"id": model_id},
-#                   status=200)
 
 
 def model_view(request, model_id):
