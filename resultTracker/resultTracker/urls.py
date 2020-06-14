@@ -18,21 +18,16 @@ from django.urls import path, re_path, include
 from django.conf.urls import url
 from model_tracker.views import (
     home_view, model_view, model_form,
-    model_create_API, model_list_view_API, model_detail_view_API
+    model_create_API, model_list_view_API, model_detail_view_API,
+    model_delete_view_API
 )
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", home_view),
     # path("createModel", model_form),
     path("createModel", model_create_API),
+    path('api/model/<int:model_id>/delete', model_delete_view_API),
     path("models", model_list_view_API),
     path("model_detail/<int:model_id>", model_detail_view_API),
     path("model_view/<int:model_id>", model_view)
-
-
-    # hold till future
-    # re_path(r'^api/models/$', views.models_list),
-    # ERROR re_path(r'^api/models/(?P[0-9]+)$', views.model_detail)
-    # re_path(r'^api/models/([0-9]+)$', views.model_detail)
-
 ]

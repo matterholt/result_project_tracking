@@ -134,14 +134,21 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+DEFAULT_RENDERER_CLASSES = [
+    'rest_framework.renderers.BrowsableAPIRenderer']
+
+if DEBUG:
+    DEFAULT_RENDERER_CLASSES += [
+        'rest_framework.renderers.JSONRenderer'
+    ]
 
 REST_FRAMEWORK = {
+    # 'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES,
+
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        # 'rest_framework.renderers.BrowsableAPIRenderer',
-    ]
+
+
 }

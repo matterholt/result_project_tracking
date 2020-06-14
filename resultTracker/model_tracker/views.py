@@ -51,11 +51,24 @@ def model_detail_view_API(request, model_id, * arg, **kwargs):
 @permission_classes([IsAuthenticated])
 def model_create_API(request, *args, **kwargs):
     serializer = Cm_model_detail_Serializer(data=request.POST)
-
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
     return Response({}, status=400)
+
+
+@api_view(['DELETE', 'POST'])
+@permission_classes([IsAuthenticated])
+def model_delete_view_API(request, model_id, * arg, **kwargs):
+    qs = Cm_model_detail.objects.filter(id=model_id)
+    if not qs.exists():
+        return Respose({'message': "item not found"}, status=404)
+    qs_user = qs.filter(user=request.user)
+    if not qs_user.exists():
+        return Response({'message': 'You can not delete'}, status=401)
+    obj = qs.first()
+    obj.delete()
+    return Response({'message': 'model has been removed'}, status=200)
 
 
 '''

@@ -139,11 +139,12 @@ Results Tracker Home
         xhr.open(method, url)
         xhr.onload = function () {
             let serverResp = xhr.response
+            console.log(serverResp)
             let listedItems = serverResp
             let htmlModelList = ""
 
             for (var i = 0; i < listedItems.length; i++) {
-                console.log(listedItems[i])
+
                 const currentRow = elementFormat(listedItems[i])
 
                 htmlModelList += currentRow
